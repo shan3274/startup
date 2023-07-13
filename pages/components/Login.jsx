@@ -44,7 +44,7 @@ const Login = ({ closeModal }) => {
   }, [user]);
   return (
     <div>
-      <div className="w-full h-screen flex items-center justify-center absolute top-0 bg-trans backdrop-blur-sm">
+      <div className="w-full h-screen flex items-center justify-center absolute top-0 bg-trans backdrop-blur-sm z-[1000]">
         <div className="sm:w-[40%] sm:h-[70%] flex flex-col items-center p-10 justify-start gap-10 bg-white backdrop-blur-xl border rounded-lg drop-shadow-sm">
           <div className="">
             <button

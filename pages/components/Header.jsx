@@ -102,7 +102,7 @@ const Header = () => {
         {menuOpen && (
           <div
             className={
-              "w-[20%] h-[80%] overflow-y-scroll border-r transition-[1s] flex flex-col text-[20px] pl-10 gap-2 "
+              "w-[20%] h-screen overflow-y-scroll border-r transition-[1s] flex flex-col text-[20px] pl-10 gap-2 absolute bg-white z-[20000] "
             }
           >
             <div className="transition-[1s] hover:text-blue-500">hello</div>

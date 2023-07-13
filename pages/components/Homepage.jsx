@@ -42,14 +42,22 @@ const Homepage = () => {
           </div>
         </div>
         {/* four about boxes */}
-        <div className="w-[70%] h-[15%] flex items-center justify-around">
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:bg-gray-500"></div>
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border"></div>
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border"></div>
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border"></div>
+        <div className="w-[70%] h-[15%] flex items-center justify-around absolute bottom-[20rem]">
+          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+            Who we are?
+          </div>
+          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+            What we do?
+          </div>
+          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+            How to Contact Us?
+          </div>
+          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+            Business Profile
+          </div>
         </div>
         {/* Ads swiper */}
-        <div className="w-[60%] h-[30%] flex items-center justify-center m-10 p-10 border">
+        <div className="w-[95%] h-[60%] flex items-center justify-center m-10  border z-[-1] absolute top-10">
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -60,27 +68,112 @@ const Homepage = () => {
             pagination={{
               clickable: true,
             }}
-            navigation={true}
+            navigation={false}
             modules={[Autoplay, Pagination, Navigation]}
             className="mySwiper"
           >
             <SwiperSlide>
               <div className="w-full h-[100%]">
-                <img src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
-                alt="Image"
-                className="w-full h-full"
+                <img
+                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  alt="Image"
+                  className="w-[100%] object-contain"
                 />
               </div>
             </SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            <SwiperSlide>Slide 5</SwiperSlide>
-            <SwiperSlide>Slide 6</SwiperSlide>
-            <SwiperSlide>Slide 7</SwiperSlide>
-            <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide>
+            <SwiperSlide>
+              <div className="w-full h-[100%] object-cover">
+                <img
+                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  alt="Image"
+                  className="w-full h-full "
+                />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="w-full h-[100%]">
+                <img
+                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  alt="Image"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="w-full h-[100%]">
+                <img
+                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  alt="Image"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="w-full h-[100%]">
+                <img
+                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  alt="Image"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </SwiperSlide>
           </Swiper>
+        </div>
+        {/* Services */}
+        <div className="w-[80%] h-[20%] flex items-center justify-around absolute bottom-5 z-10">
+          <div className="w-[25%] h-[100%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+            Technical Productss
+          </div>
+          <div className="w-[25%] h-[100%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+            Technical Services
+          </div>
+          <div className="w-[25%] h-[100%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+            Consultancy
+          </div>
+        </div>
+        {/* footer */}
+        <div className="w-full h-[500px] bg-gray-400 text-white absolute bottom-[-500px] flex flex-col items-center justify-start">
+          <div className="w-full h-[100px] bg-gray-500  text-[15px] font-[500] flex items-center justify-center cursor-pointer hover:scale-[1.02] hover:text-gray-200 transition-[1s]">
+            Procedure to buy & sell on this website
+          </div>
+          <div className="w-[80%] h-[400px] text-white text-[17px] font-[500] flex items-center justify-around">
+            <div className="w-[25%] h-[100%] flex flex-col items-center justify-center">
+              <p className="text-[18px] font-[700]">Heading demo line</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+            </div>
+            <div className="w-[25%] h-[100%] flex flex-col items-center justify-center">
+              <p className="text-[18px] font-[700]">Heading demo line</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+            </div>
+            <div className="w-[25%] h-[100%] flex flex-col items-center justify-center">
+              <p className="text-[18px] font-[700]">Heading demo line</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+            </div>
+            <div className="w-[25%] h-[100%] flex flex-col items-center justify-center">
+              <p className="text-[18px] font-[700]">Heading demo line</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+              <p>Demo list</p>
+            </div>
+          </div>
         </div>
       </div>
     );

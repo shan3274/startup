@@ -51,7 +51,7 @@ const Signup = ({ closeModal, closeLogin }) => {
   };
   return (
     <div>
-      <div className="w-full h-screen flex items-center justify-center absolute top-0 ">
+      <div className="w-full h-screen flex items-center justify-center absolute top-0 z-[1001]">
         <div className="sm:w-[40%] sm:h-[70%] flex flex-col items-center p-10 justify-center gap-5 bg-white border rounded-lg drop-shadow-lg bg-trans">
           <div className="">
             <button
