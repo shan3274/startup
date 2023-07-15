@@ -23,7 +23,7 @@ const Homepage = () => {
     return (
       <div className="w-[100vw] h-[100vh] text-[#000000] relative flex flex-col items-center justify-start">
         {/* scrolling text */}
-        <div className="w-[100%] h-[10%] flex items-center justify-center flex-col ">
+        {/* <div className="w-[100%] h-[10%] flex items-center justify-center flex-col ">
           <div className="flex w-[100%] overflow-hidden select-none">
             <div className="flex-shrink-0 flex items-center justify-around whitespace-nowrap w-[100%] animate-scrollX">
               <div className="grid place-items-center w-[clamp(10rem, 1rem + 40vmin, 30rem)] p-[calc(clamp(10rem, 1rem + 30vmin, 30rem) / 10)]">
@@ -40,24 +40,37 @@ const Homepage = () => {
               </div>
             </div>
           </div>
+        </div> */}
+        <div className="w-[100%] h-[10%] flex items-center justify-center flex-col ">
+          <div className="flex w-[100%] overflow-hidden select-none">
+            <div className="flex-shrink-0 flex items-center justify-around whitespace-nowrap w-[100%] animate-pulse">
+              <div className="grid place-items-center w-[clamp(10rem, 1rem + 40vmin, 30rem)] p-[calc(clamp(10rem, 1rem + 30vmin, 30rem) / 10)]">
+                <p className="text-[20px] sm:text-[35px] font-[500] object-contain w-[100%] h-[100%] rounded-[.5rem] px-[5px] py-[20px] drop-shadow-md">
+                  Tag Line / Punch Line Scrolling
+                </p>
+              </div>
+            </div>
+            
+          </div>
         </div>
+       
         {/* four about boxes */}
-        <div className="w-[70%] h-[15%] flex items-center justify-around absolute bottom-[20rem]">
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+        <div className="w-[60%] h-[12%] flex items-center justify-around absolute top-[7rem]">
+          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[15px] text-center transition-[1s]">
             Who we are?
           </div>
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[15px] text-center transition-[1s]">
             What we do?
           </div>
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[15px] text-center transition-[1s]">
             How to Contact Us?
           </div>
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
+          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[15px] text-center transition-[1s]">
             Business Profile
           </div>
         </div>
         {/* Ads swiper */}
-        <div className="w-[95%] h-[60%] flex items-center justify-center m-10  border z-[-1] absolute top-10">
+        <div className="w-[70%] h-[50%] flex items-center justify-center m-10  border z-[-1] absolute top-[25%]">
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -120,7 +133,7 @@ const Homepage = () => {
           </Swiper>
         </div>
         {/* Services */}
-        <div className="w-[80%] h-[20%] flex items-center justify-around absolute bottom-5 z-10">
+        <div className="w-[80%] h-[20%] flex items-center justify-around absolute bottom-[-5rem] z-10">
           <div className="w-[25%] h-[100%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[20px] text-center transition-[1s]">
             Technical Productss
           </div>
@@ -132,7 +145,7 @@ const Homepage = () => {
           </div>
         </div>
         {/* footer */}
-        <div className="w-full h-[500px] bg-gray-400 text-white absolute bottom-[-500px] flex flex-col items-center justify-start">
+        <div className="w-full h-[500px] bg-gray-400 text-white absolute bottom-[-650px] flex flex-col items-center justify-start">
           <div className="w-full h-[100px] bg-gray-500  text-[15px] font-[500] flex items-center justify-center cursor-pointer hover:scale-[1.02] hover:text-gray-200 transition-[1s]">
             Procedure to buy & sell on this website
           </div>
