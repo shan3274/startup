@@ -1,8 +1,8 @@
-import "@/styles/globals.css";
-import "../styles/ads.css";
-import { configureStore } from "@reduxjs/toolkit";
-import { Provider } from "react-redux";
-import userReducer from "./features/user";
+import '@/styles/globals.css';
+import '../styles/ads.css';
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import userReducer from '../src/redux/features/user';
 
 const store = configureStore({
   reducer: {
