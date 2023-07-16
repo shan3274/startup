@@ -29,7 +29,7 @@ const Header = () => {
   });
 
   return (
-    <div className='w-full h-screen'>
+    <div className='w-full '>
       <nav className='w-full h-[5rem] flex items-center justify-around'>
         {/* menu */}
         <div className='sm:w-[10%] relative sm:right-0 right-8 flex items-center justify-start pl-10  text-[25px]'>
@@ -106,7 +106,7 @@ const Header = () => {
       {menuOpen && (
         <div
           className={
-            'w-[20%] h-screen overflow-y-scroll border-r transition-[1s] flex flex-col text-[20px] pl-10 gap-2 absolute bg-white z-[20000] '
+            'w-[20%] h-screen overflow-y-scroll border-r transition-[1s] flex flex-col text-[20px] pl-10 gap-2 absolute bg-white z-[30000] '
           }
         >
           <div className='transition-[1s] hover:text-blue-500'>hello</div>
@@ -149,7 +149,7 @@ const Header = () => {
       {login && <Login closeModal={setLogin} />}
       {/* after login modal */}
       {Logedin && <Loggedin closeModal={setLoggedin} />}
-      <Homepage />
+      
     </div>
   );
 };

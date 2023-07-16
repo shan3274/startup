@@ -8,6 +8,11 @@ const Loggedin = ({ closeModal }) => {
   const users = useSelector((state) => state.user.value);
   const [email, setEmail] = useState(null);
   const [data, setData] = useState([]);
+
+  // modals
+  
+
+
   let databaseRef;
 
   try {

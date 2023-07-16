@@ -11,17 +11,37 @@ import "swiper/css/navigation";
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
+import Know from "./Know";
+import Link from "next/link";
 
 const Homepage = () => {
   const [ifuser, setIfUser] = useState(null);
+
+  // modals
+  const [know, setKnow] = useState(false);
+
   useEffect(() => {
     setIfUser(localStorage.getItem("email"));
   }, []);
   if (ifuser != null) {
-    return <div>welcom {localStorage.getItem("userName")}</div>;
+    return (
+      <div className="w-full h-screen flex flex-col justify-start items-center ">
+        <div className="w-[30%] h-[20%] flex items-center justify-around">
+          <Link href="/sell" className="w-[40%] h-[40%]">
+            <div className="w-[100%] h-[100%] rounded-lg border bg-orange-400 drop-shadow-xl text-white text-[25px] flex items-center justify-center cursor-pointer hover:scale-[1.03] transition-[1s]">
+              SELL
+            </div>
+          </Link>
+
+          <div className="w-[40%] h-[40%] rounded-lg border bg-orange-400 drop-shadow-xl text-white text-[25px] flex items-center justify-center cursor-pointer hover:scale-[1.03] transition-[1s]">
+            BUY
+          </div>
+        </div>
+      </div>
+    );
   } else {
     return (
-      <div className="w-[100vw] h-[100vh] text-[#000000] relative flex flex-col items-center justify-start">
+      <div className="w-[100vw] h-[100vh] text-[#000000] absolute flex flex-col items-center justify-start">
         {/* scrolling text */}
         {/* <div className="w-[100%] h-[10%] flex items-center justify-center flex-col ">
           <div className="flex w-[100%] overflow-hidden select-none">
@@ -50,13 +70,15 @@ const Homepage = () => {
                 </p>
               </div>
             </div>
-            
           </div>
         </div>
-       
+
         {/* four about boxes */}
         <div className="w-[60%] h-[12%] flex items-center justify-around absolute top-[7rem]">
-          <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[15px] text-center transition-[1s]">
+          <div
+            className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[15px] text-center transition-[1s]"
+            onClick={() => setKnow(true)}
+          >
             Who we are?
           </div>
           <div className="w-[17%] h-[90%] bg-white drop-shadow-xl rounded-lg border cursor-pointer hover:scale-[1.05] flex items-center justify-center hover:text-blue-300 text-[15px] text-center transition-[1s]">
@@ -188,6 +210,7 @@ const Homepage = () => {
             </div>
           </div>
         </div>
+        {know && <Know closeModal={{ setKnow }} />}
       </div>
     );
   }
