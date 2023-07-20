@@ -1,18 +1,95 @@
 import Header from "@/src/components/Header";
 import React from "react";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/src/firebase-config";
+import { getDownloadURL, ref, getStorage, uploadBytes } from "firebase/storage";
 
 import { useState } from "react";
 const index = () => {
   const [type, setType] = useState("Spare parts");
   const [category, setCategory] = useState("");
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [sellerName, setSellerName] = useState("");
+  const [sellerEmail, setSellerEmail] = useState("");
+  const [sellerPhone, setSellerPhone] = useState("");
+  const [size, setSeize] = useState("");
+  const [dateofManu, setDateofManu] = useState("");
+  const [price, setPrice] = useState("");
+  const [img, setImg] = useState([]);
 
+  let databaseRef;
+  let typepath;
+  const downloadImageURLs = [];
+  if (type == "Machine") {
+    typepath = `POSTS/GjZxh7T7CJsYv1lEEoyW/Machine/VHgC9rJmSFoK1CV1o922/${category}`;
+  } else {
+    typepath = `POSTS/GjZxh7T7CJsYv1lEEoyW/Spareparts/jcJW7idJNETVspHqz7ir/${category}`;
+  }
+  try {
+    databaseRef = collection(db, typepath);
+  } catch (error) {
+    console.log(error.message);
+  }
+
+  const sellfun = async () => {
+    try {
+      const storageRef = getStorage();
+      let imageURLs = "";
+
+      let ins = 0;
+      let ins1 = 0;
+      for (const image of img) {
+        const imagRef = ref(
+          storageRef,
+          `Post/Image/'${Date.now()}-${image.name}`
+        );
+
+        imageURLs = await uploadBytes(imagRef, image);
+        await getDownloadURL(ref(storageRef, imageURLs.ref.fullPath)).then(
+          (response) => {
+            downloadImageURLs.push(response);
+          }
+        );
+      }
+
+      const dataShow = {
+        productName: productName,
+        productDescription: productDescription,
+        category: category,
+        type: type,
+        sellerName: sellerName,
+        sellerEmail: sellerEmail,
+        sellerPhone: sellerPhone,
+        size: size,
+        dateofManu: dateofManu,
+        price: price,
+        imageUrls: downloadImageURLs,
+      };
+      await addDoc(databaseRef, dataShow).then(() => {
+        alert("submitted");
+        setProductName("");
+        setProductDescription("");
+        setCategory("");
+        setType("");
+        setSellerName("");
+        setSellerEmail("");
+        setSellerPhone("");
+        setSeize("");
+        setDateofManu("");
+        setPrice("");
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
-    <div className="w-full h-screen ">
+    <div className="">
       <Header />
 
-      <div className="w-full h-screen flex flex-col items-center justify-start">
+      <div className="w-full  flex flex-col items-center justify-start">
         {/* type */}
-        <div className="w-[15%] h-[5%] flex items-center justify-center border bg-white  mt-8 rounded-lg drop-shadow-md">
+        <div className="w-[15%] h-[5%] flex items-center justify-center border bg-white  mt-8 rounded-lg drop-shadow-md absolute">
           <select
             id="type"
             name="type"
@@ -25,7 +102,7 @@ const index = () => {
         </div>
         {/* form */}
 
-        <div className="w-full h-screen overflow-y-scroll flex flex-col items-center justify-start  absolute top-[25%]">
+        <div className="w-full h-screen flex flex-col items-center justify-start  mt-[6rem]">
           {/* label */}
           <label className="w-[15%] flex items-center justify-center h-[5%] mb-10 text-[30px] font-[600]">
             {type}
@@ -33,12 +110,20 @@ const index = () => {
           {/* image */}
           <div className="w-[15%] h-[10%] flex items-center justify-center bg-yellow-300 rounded-lg drop-shadow-lg hover:scale-[1.03] transition-[1s] cursor-pointer">
             <label htmlFor="image">Image +</label>
-            <input type="file" className="hidden" id="image" />
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => setImg(e.target.files)}
+              id="image"
+              multiple
+            />
           </div>
           {/* fields */}
           <input
             type="text"
             placeholder="Product Name"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-10 border border-gray-400 text-black rounded-md"
           />
           <div className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md flex items-center ">
@@ -59,23 +144,66 @@ const index = () => {
           </div>
           <textarea
             placeholder="Product Description"
-            className="w-[25%] h-[20%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
+            value={productDescription}
+            onChange={(e) => setProductDescription(e.target.value)}
+            className="w-[25%] h-[20%] pl-5 mt-5 border border-gray-400 text-black rounded-md resize-none"
           ></textarea>
           <input
             type="text"
             placeholder="Seller Name"
+            value={sellerName}
+            onChange={(e) => setSellerName(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
           />
           <input
             type="email"
             placeholder="Seller Email"
+            value={sellerEmail}
+            onChange={(e) => setSellerEmail(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
           />
           <input
             type="text"
             placeholder="Seller Phone"
+            value={sellerPhone}
+            onChange={(e) => setSellerPhone(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
           />
+        </div>
+
+        <div className="w-full h-screen flex flex-col items-center justify-start relative top-[-6rem]">
+          {/* fields */}
+          <input
+            type="number"
+            placeholder="Size"
+            value={size}
+            onChange={(e) => setSeize(e.target.value)}
+            className="w-[25%] h-[5%] pl-5  border border-gray-400 text-black rounded-md"
+          />
+          <label className="w-[25%] h-[5%]   text-black flex items-center mt-5 text-[20px]">
+            Date Of Manufacture
+          </label>
+          <input
+            type="date"
+            value={dateofManu}
+            onChange={(e) => setDateofManu(e.target.value)}
+            className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
+          />
+
+          <input
+            type="text"
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
+          />
+
+          <button
+            className="w-[10%] h-[7%]  mt-10 bg-gray-400 rounded-lg shadow-lg text-white  drop-shadow-lg hover:scale-[1.03] transition-[1s]"
+            onClick={sellfun}
+          >
+            SELL
+          </button>
         </div>
       </div>
     </div>
