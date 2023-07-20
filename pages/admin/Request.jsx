@@ -97,7 +97,7 @@ const Request = () => {
             Find
           </div>
         </div>
-        <div className="w-[80%] h-screen flex flex-col items-center justify-center">
+        <div className="w-[80%] flex flex-col items-center justify-center absolute left-[20rem] top-[10rem]">
           {data.map((res) => {
             return <Resdisplay {...res} />;
           })}
