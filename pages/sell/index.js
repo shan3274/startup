@@ -17,6 +17,7 @@ const index = () => {
   const [dateofManu, setDateofManu] = useState("");
   const [price, setPrice] = useState("");
   const [img, setImg] = useState([]);
+  const [approve, setApprove] = useState("Not approve");
 
   let databaseRef;
   let typepath;
@@ -65,6 +66,7 @@ const index = () => {
         dateofManu: dateofManu,
         price: price,
         imageUrls: downloadImageURLs,
+        firstapprove: approve,
       };
       await addDoc(databaseRef, dataShow).then(() => {
         alert("submitted");

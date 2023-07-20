@@ -19,6 +19,7 @@ const Request = () => {
   } else {
     path = machine;
   }
+
   try {
     databaseRef = collection(db, path);
   } catch (error) {
@@ -29,7 +30,7 @@ const Request = () => {
       await getDocs(databaseRef).then((response) => {
         setData(
           response.docs.map((data) => {
-            return { ...data.data(), id: data.id };
+            return { ...data.data(), id: data.id, path: path };
           })
         );
       });
@@ -98,9 +99,7 @@ const Request = () => {
         </div>
         <div className="w-[80%] h-screen flex flex-col items-center justify-center">
           {data.map((res) => {
-            return (
-              <Resdisplay {...res}/>
-            );
+            return <Resdisplay {...res} />;
           })}
         </div>
       </div>
