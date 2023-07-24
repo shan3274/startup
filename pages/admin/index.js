@@ -5,12 +5,14 @@ import { useRouter } from "next/router";
 
 const index = () => {
   const [adminid, setID] = useState("");
-  const [fireId, setFireId] = useState();
+  const [fireId, setFireId] = useState("");
   const [firPass, setFirePass] = useState();
   const [pass, setPass] = useState("");
   const [data, setData] = useState([]);
+  const [error, setError] = useState("");
   const route = useRouter();
   let databaseRef = "";
+
   try {
     databaseRef = collection(db, `Admin/wBBgAgGIlGGDDyQ17Qkd/${adminid}`);
   } catch (error) {
@@ -46,6 +48,17 @@ const index = () => {
   if (fireId == adminid && firPass == pass) {
     route.push("/admin/Request");
   }
+  useEffect(() => {
+    if (adminid != "" && fireId != adminid) {
+      setError("Id Password Wrong");
+    }
+  }, [fireId]);
+
+  useEffect(() => {
+    if (localStorage.getItem("adminid") != null) {
+      route.push("/admin/Request");
+    }
+  }, []);
 
   console.log("id ", fireId, " pass ", firPass);
   return (
@@ -78,6 +91,7 @@ const index = () => {
         >
           Login
         </button>
+        <div className="text-red-400">{error}</div>
       </div>
     </div>
   );

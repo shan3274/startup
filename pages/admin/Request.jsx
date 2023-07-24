@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "@/src/firebase-config";
 import Resdisplay from "./Resdisplay";
+import { useRouter } from "next/router";
 
 const Request = () => {
   const [category, setCategory] = useState();
   const [type, setType] = useState();
   const [data, setData] = useState([]);
+
+  const route = useRouter();
 
   let spareandparts = `POSTS/GjZxh7T7CJsYv1lEEoyW/Spareparts/jcJW7idJNETVspHqz7ir/${category}`;
   let machine = `POSTS/GjZxh7T7CJsYv1lEEoyW/Machine/VHgC9rJmSFoK1CV1o922/${category}`;
@@ -39,6 +42,11 @@ const Request = () => {
     }
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("adminid") == null) {
+      route.push("/admin");
+    }
+  }, []);
   // productName: productName,
   // productDescription: productDescription,
   // category: category,
