@@ -15,6 +15,10 @@ const Signup = ({ closeModal, closeLogin }) => {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [verifyPwd, setVerifyPwd] = useState("");
+  const [companyName, setComapanyName] = useState("");
+  const [gstin, setGstin] = useState("");
+  const [companyAddress, setComapnyAddress] = useState("");
+  const [sellerType, setSellerType] = useState("");
 
   let databaseRef;
   try {
@@ -22,10 +26,13 @@ const Signup = ({ closeModal, closeLogin }) => {
   } catch (error) {
     console.log(error.message);
   }
-  let flag = 0;
+  const [valid, setValid] = useState(false);
+  const [emailnotvalid, setEmailNotValid] = useState("");
+  const [emailwarn, setEmailwarn] = useState(false);
+
   //singup button function
   const register = async () => {
-    if (pwd == verifyPwd) {
+    if (pwd == verifyPwd && valid) {
       try {
         const user = await createUserWithEmailAndPassword(auth, email, pwd);
         console.log(user);
@@ -33,6 +40,10 @@ const Signup = ({ closeModal, closeLogin }) => {
           email: email,
           userName: userName,
           pwd: pwd,
+          companyName: companyName,
+          gstin: gstin,
+          companyAddress: companyAddress,
+          sellerType: sellerType,
         };
         const res = addDoc(databaseRef, dataShow).then((re) => {
           alert("done");
@@ -40,24 +51,33 @@ const Signup = ({ closeModal, closeLogin }) => {
           setUserName("");
           setPwd("");
           setVerifyPwd("");
+          setComapanyName("");
+          setGstin("");
+          setComapnyAddress("");
+          setSellerType("");
         });
-        console.log("firebase res" + res);
-        localStorage.setItem("email", email);
-        localStorage.setItem("password", pwd);
-        flag = 1;
       } catch (error) {
         console.log(error.message);
       }
     }
-    if (flag == 1) {
-      window.location.reload(false);
-    }
   };
+  useEffect(() => {
+    if (email != "") {
+      let hold = email.split("@");
+      if (hold[1] != "gmail.com") {
+        setValid(true);
+        setEmailNotValid("");
+      } else {
+        setValid(false);
+        setEmailNotValid("Doman not support");
+      }
+    }
+  }, [email]);
 
   return (
     <div>
       <div className="w-full h-screen flex items-center justify-center absolute top-0 z-[1001]">
-        <div className="sm:w-[40%] sm:h-[70%] flex flex-col items-center p-10 justify-center gap-5 bg-white border rounded-lg drop-shadow-lg bg-trans">
+        <div className="sm:w-[40%] flex flex-col items-center p-10 justify-center gap-5 bg-white border rounded-lg drop-shadow-lg bg-trans">
           <div className="">
             <button
               onClick={() => {
@@ -106,12 +126,47 @@ const Signup = ({ closeModal, closeLogin }) => {
             onChange={(e) => setUserName(e.target.value)}
           />
           <input
-            type="Text"
+            type="email"
             className="border w-[80%] h-[40px] rounded-xl border-black px-5 hover:scale-[1.05] hover:drop-shadow-xl transition-[1s]"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          <input
+            type="Text"
+            className="border w-[80%] h-[40px] rounded-xl border-black px-5 hover:scale-[1.05] hover:drop-shadow-xl transition-[1s]"
+            placeholder="Company Name"
+            value={companyName}
+            onChange={(e) => setComapanyName(e.target.value)}
+          />
+
+          <input
+            type="Text"
+            className="border w-[80%] h-[40px] rounded-xl border-black px-5 hover:scale-[1.05] hover:drop-shadow-xl transition-[1s]"
+            placeholder="gstin "
+            value={gstin}
+            onChange={(e) => setGstin(e.target.value)}
+          />
+          <input
+            type="Text"
+            className="border w-[80%] h-[40px] rounded-xl border-black px-5 hover:scale-[1.05] hover:drop-shadow-xl transition-[1s]"
+            placeholder="Company Full Address"
+            value={companyAddress}
+            onChange={(e) => setComapnyAddress(e.target.value)}
+          />
+
+          <div className="border w-[80%] h-[40px] rounded-xl border-black px-5 hover:scale-[1.05] flex  hover:drop-shadow-xl transition-[1s]">
+            <select
+              id="type"
+              name="type"
+              value={sellerType}
+              onChange={(e) => setSellerType(e.target.value)}
+            >
+              <option value="">Seller type</option>
+              <option value="Type 1">Type 1</option>
+              <option value="Type 2">Type 2</option>
+            </select>
+          </div>
           <input
             type="password"
             className="border w-[80%] h-[40px] rounded-xl border-black px-5 hover:scale-[1.05] hover:drop-shadow-xl transition-[1s]"
@@ -126,13 +181,14 @@ const Signup = ({ closeModal, closeLogin }) => {
             value={verifyPwd}
             onChange={(e) => setVerifyPwd(e.target.value)}
           />
+
           <button
             className="bg-gray-400 w-[50%] h-[40px] rounded-3xl text-white hover:bg-gray-500 hover:scale-[1.05] hover:drop-shadow-xl transition-[1s]"
             onClick={register}
           >
             Signup
           </button>
-
+          {emailnotvalid}
           <p>
             Already User ?{" "}
             <Link

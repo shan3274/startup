@@ -13,6 +13,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Image from "next/image";
 import Know from "./Know";
 import Link from "next/link";
+import Sidebar from "./Sidebar";
 
 const Homepage = () => {
   const [ifuser, setIfUser] = useState(null);
@@ -26,22 +27,25 @@ const Homepage = () => {
   if (ifuser != null) {
     return (
       <div className="w-full h-screen flex flex-col justify-start items-center ">
+        
         <div className="w-[30%] h-[20%] flex items-center justify-around">
           <Link href="/sell" className="w-[40%] h-[40%]">
             <div className="w-[100%] h-[100%] rounded-lg border bg-orange-400 drop-shadow-xl text-white text-[25px] flex items-center justify-center cursor-pointer hover:scale-[1.03] transition-[1s]">
               SELL
             </div>
           </Link>
-
-          <div className="w-[40%] h-[40%] rounded-lg border bg-orange-400 drop-shadow-xl text-white text-[25px] flex items-center justify-center cursor-pointer hover:scale-[1.03] transition-[1s]">
-            BUY
-          </div>
+          <Link href="/buy" className="w-[40%] h-[40%]">
+            <div className="w-[100%] h-[100%] rounded-lg border bg-orange-400 drop-shadow-xl text-white text-[25px] flex items-center justify-center cursor-pointer hover:scale-[1.03] transition-[1s]">
+              BUY
+            </div>
+          </Link>
         </div>
       </div>
     );
   } else {
     return (
-      <div className="w-[100vw] h-[100vh] text-[#000000] absolute flex flex-col items-center justify-start">
+      <div className="w-full h-screen text-[#000000] absolute flex flex-col items-center justify-start">
+        
         {/* scrolling text */}
         {/* <div className="w-[100%] h-[10%] flex items-center justify-center flex-col ">
           <div className="flex w-[100%] overflow-hidden select-none">
