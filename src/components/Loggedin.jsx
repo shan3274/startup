@@ -14,7 +14,7 @@ const Loggedin = ({ closeModal }) => {
   let databaseRef;
 
   try {
-    databaseRef = collection(db, `Users/WUtcWShrAMkcfnmVN5ls/${email}`);
+    databaseRef = collection(db, `User`);
   } catch (error) {
     console.log(error.message);
   }
@@ -27,7 +27,7 @@ const Loggedin = ({ closeModal }) => {
       );
     });
   };
-  
+
   useEffect(() => {
     if (window === undefined) return;
 

@@ -30,8 +30,8 @@ const Homepage = () => {
         <Link href="/admin/Request" className="hover:text-blue-400">
           Product Request
         </Link>
-        <Link href="" className="hover:text-blue-400">
-          Link 1
+        <Link href="/admin/Accountreq" className="hover:text-blue-400">
+          Account Request
         </Link>
         <Link href="" className="hover:text-blue-400">
           Link 1

@@ -19,23 +19,23 @@ const Signup = ({ closeModal, closeLogin }) => {
   const [gstin, setGstin] = useState("");
   const [companyAddress, setComapnyAddress] = useState("");
   const [sellerType, setSellerType] = useState("");
+  const [natureOfBusiness, setNatureOfBusiness] = useState("");
 
   let databaseRef;
   try {
-    databaseRef = collection(db, `Users/WUtcWShrAMkcfnmVN5ls/${email}`);
+    databaseRef = collection(db, `User`);
   } catch (error) {
     console.log(error.message);
   }
   const [valid, setValid] = useState(false);
   const [emailnotvalid, setEmailNotValid] = useState("");
 
-
   //singup button function
   const register = async () => {
     if (pwd == verifyPwd && valid) {
       try {
-        const user = await createUserWithEmailAndPassword(auth, email, pwd);
-        console.log(user);
+        // const user = await createUserWithEmailAndPassword(auth, email, pwd);
+        // console.log(user);
         const dataShow = {
           email: email,
           userName: userName,
@@ -44,6 +44,7 @@ const Signup = ({ closeModal, closeLogin }) => {
           gstin: gstin,
           companyAddress: companyAddress,
           sellerType: sellerType,
+          natureOfBusiness: natureOfBusiness,
         };
         const res = addDoc(databaseRef, dataShow).then((re) => {
           alert("done");
@@ -78,8 +79,8 @@ const Signup = ({ closeModal, closeLogin }) => {
 
   return (
     <div>
-      <div className="w-full h-screen flex items-center justify-center absolute top-0 z-[1001]">
-        <div className="sm:w-[40%] flex flex-col items-center p-10 justify-center gap-5 bg-white border rounded-lg drop-shadow-lg bg-trans">
+      <div className="w-full h-screen flex items-center justify-center absolute top-[5rem] z-[1001]">
+        <div className="sm:w-[40%] flex flex-col items-center p-10 justify-center gap-5 bg-white border rounded-lg bg-trans">
           <div className="">
             <button
               onClick={() => {
@@ -164,9 +165,42 @@ const Signup = ({ closeModal, closeLogin }) => {
               value={sellerType}
               onChange={(e) => setSellerType(e.target.value)}
             >
-              <option value="">Company type</option>
-              <option value="Type 1">Type 1</option>
-              <option value="Type 2">Type 2</option>
+              <option value="">Type of Industry</option>
+              <option value="Mechanical">Mechanical</option>
+              <option value="Electrical">Electrical</option>
+              <option value="Oil and gas">Oil and gas</option>
+              <option value="Marine Industry">Marine Industry</option>
+              <option value="Civil">Civil</option>
+              <option value="Instrument">Instrument</option>
+              <option value="Chemical">Chemical</option>
+              <option value="Multi">Multi</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div className="border w-[80%] h-[40px] rounded-xl border-black px-5 hover:scale-[1.05] flex  hover:drop-shadow-xl transition-[1s]">
+            <select
+              id="type"
+              name="type"
+              value={natureOfBusiness}
+              onChange={(e) => setNatureOfBusiness(e.target.value)}
+            >
+              <option value="">Nature of business</option>
+              <option value="Buyer">Buyer</option>
+              <option value="Seller">Seller</option>
+              <option value="Both">Both</option>
+            </select>
+          </div>
+          <div className="border w-[80%] h-[40px] rounded-xl border-black px-5 hover:scale-[1.05] flex  hover:drop-shadow-xl transition-[1s]">
+            <select
+              id="type"
+              name="type"
+              value={natureOfBusiness}
+              onChange={(e) => setNatureOfBusiness(e.target.value)}
+            >
+              <option value="">Application</option>
+              <option value="Buyer">Buyer</option>
+              <option value="Seller">Seller</option>
+              <option value="Both">Both</option>
             </select>
           </div>
           <input
