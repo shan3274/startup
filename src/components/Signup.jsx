@@ -28,7 +28,7 @@ const Signup = ({ closeModal, closeLogin }) => {
   }
   const [valid, setValid] = useState(false);
   const [emailnotvalid, setEmailNotValid] = useState("");
-  const [emailwarn, setEmailwarn] = useState(false);
+
 
   //singup button function
   const register = async () => {
@@ -69,7 +69,9 @@ const Signup = ({ closeModal, closeLogin }) => {
         setEmailNotValid("");
       } else {
         setValid(false);
-        setEmailNotValid("Doman not support");
+        setEmailNotValid(
+          "Warning : Doman not supported please try with work email"
+        );
       }
     }
   }, [email]);
@@ -162,7 +164,7 @@ const Signup = ({ closeModal, closeLogin }) => {
               value={sellerType}
               onChange={(e) => setSellerType(e.target.value)}
             >
-              <option value="">Seller type</option>
+              <option value="">Company type</option>
               <option value="Type 1">Type 1</option>
               <option value="Type 2">Type 2</option>
             </select>
@@ -188,7 +190,7 @@ const Signup = ({ closeModal, closeLogin }) => {
           >
             Signup
           </button>
-          {emailnotvalid}
+          <p className="text-red-500">{emailnotvalid}</p>
           <p>
             Already User ?{" "}
             <Link

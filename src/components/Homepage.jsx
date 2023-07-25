@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import styled, { keyframes, css } from "styled-components";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
+import { db } from "../firebase-config";
 
 // Import Swiper styles
 import "swiper/css";
@@ -14,6 +15,7 @@ import Image from "next/image";
 import Know from "./Know";
 import Link from "next/link";
 import Sidebar from "./Sidebar";
+import { collection, getDocs } from "firebase/firestore";
 
 const Homepage = () => {
   const [ifuser, setIfUser] = useState(null);
@@ -24,10 +26,10 @@ const Homepage = () => {
   useEffect(() => {
     setIfUser(localStorage.getItem("email"));
   }, []);
+
   if (ifuser != null) {
     return (
       <div className="w-full h-screen flex flex-col justify-start items-center ">
-        
         <div className="w-[30%] h-[20%] flex items-center justify-around">
           <Link href="/sell" className="w-[40%] h-[40%]">
             <div className="w-[100%] h-[100%] rounded-lg border bg-orange-400 drop-shadow-xl text-white text-[25px] flex items-center justify-center cursor-pointer hover:scale-[1.03] transition-[1s]">
@@ -45,7 +47,6 @@ const Homepage = () => {
   } else {
     return (
       <div className="w-full h-screen text-[#000000] absolute flex flex-col items-center justify-start">
-        
         {/* scrolling text */}
         {/* <div className="w-[100%] h-[10%] flex items-center justify-center flex-col ">
           <div className="flex w-[100%] overflow-hidden select-none">
@@ -96,6 +97,7 @@ const Homepage = () => {
           </div>
         </div>
         {/* Ads swiper */}
+
         <div className="w-[70%] h-[50%] flex items-center justify-center m-10  border z-[-1] absolute top-[25%]">
           <Swiper
             spaceBetween={30}
@@ -114,16 +116,16 @@ const Homepage = () => {
             <SwiperSlide>
               <div className="w-full h-[100%]">
                 <img
-                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  src="https://firebasestorage.googleapis.com/v0/b/e-com-3fbf8.appspot.com/o/poster%2Fposter1.jpg?alt=media&token=7416ccdf-f557-483e-879b-7900b677459a"
                   alt="Image"
-                  className="w-[100%] object-contain"
+                  className="w-[100%]  bg-cover"
                 />
               </div>
             </SwiperSlide>
             <SwiperSlide>
               <div className="w-full h-[100%] object-cover">
                 <img
-                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  src="https://firebasestorage.googleapis.com/v0/b/e-com-3fbf8.appspot.com/o/poster%2Fposter2.jpg?alt=media&token=aa4bc2e0-877a-40e8-9b23-4f1bc7f29a1e"
                   alt="Image"
                   className="w-full h-full "
                 />
@@ -132,7 +134,7 @@ const Homepage = () => {
             <SwiperSlide>
               <div className="w-full h-[100%]">
                 <img
-                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  src="https://firebasestorage.googleapis.com/v0/b/e-com-3fbf8.appspot.com/o/poster%2Fposter3.jpg?alt=media&token=65b5b64e-1ea7-4d77-9b47-2cd5290ec7c2"
                   alt="Image"
                   className="w-full h-full object-contain"
                 />
@@ -141,7 +143,7 @@ const Homepage = () => {
             <SwiperSlide>
               <div className="w-full h-[100%]">
                 <img
-                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  src="https://firebasestorage.googleapis.com/v0/b/e-com-3fbf8.appspot.com/o/poster%2Fposter4.jpg?alt=media&token=2e71040d-99bf-4b53-8f77-92eef1b46b3b"
                   alt="Image"
                   className="w-full h-full object-contain"
                 />
@@ -150,12 +152,13 @@ const Homepage = () => {
             <SwiperSlide>
               <div className="w-full h-[100%]">
                 <img
-                  src="https://images-eu.ssl-images-amazon.com/images/G/31/img17/Home/AmazonTV/MotionHero2023/3000x1200_Heart-Surgeons_V1._CB601144149_.jpg"
+                  src="https://firebasestorage.googleapis.com/v0/b/e-com-3fbf8.appspot.com/o/poster%2Fposter5.jpg?alt=media&token=5ec5d1c2-2b15-4002-b6f1-98c49915b457"
                   alt="Image"
                   className="w-full h-full object-contain"
                 />
               </div>
             </SwiperSlide>
+            
           </Swiper>
         </div>
         {/* Services */}
