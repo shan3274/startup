@@ -20,6 +20,7 @@ const Signup = ({ closeModal, closeLogin }) => {
   const [companyAddress, setComapnyAddress] = useState("");
   const [sellerType, setSellerType] = useState("");
   const [natureOfBusiness, setNatureOfBusiness] = useState("");
+  const [application, setApplication] = useState("");
 
   let databaseRef;
   try {
@@ -45,6 +46,7 @@ const Signup = ({ closeModal, closeLogin }) => {
           companyAddress: companyAddress,
           sellerType: sellerType,
           natureOfBusiness: natureOfBusiness,
+          application: application,
         };
         const res = addDoc(databaseRef, dataShow).then((re) => {
           alert("done");
@@ -194,13 +196,19 @@ const Signup = ({ closeModal, closeLogin }) => {
             <select
               id="type"
               name="type"
-              value={natureOfBusiness}
-              onChange={(e) => setNatureOfBusiness(e.target.value)}
+              value={application}
+              onChange={(e) => setApplication(e.target.value)}
             >
               <option value="">Application</option>
-              <option value="Buyer">Buyer</option>
-              <option value="Seller">Seller</option>
-              <option value="Both">Both</option>
+              <option value="Thermal power">Thermal power</option>
+              <option value="Nuclear power">Nuclear power</option>
+              <option value="Solar power">Solar power</option>
+              <option value="Wind">Wind</option>
+              <option value="Hydro">Hydro</option>
+              <option value="Defence">Defence</option>
+              <option value="Civil">Civil</option>
+              <option value="Steal">Steal</option>
+              <option value="Others">Others</option>
             </select>
           </div>
           <input

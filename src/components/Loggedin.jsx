@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
+import { BiUserCircle, BiEditAlt, BiMailSend, BiLogOut } from "react-icons/bi";
 
 const Loggedin = ({ closeModal }) => {
   const users = useSelector((state) => state.user.value);
@@ -21,9 +22,15 @@ const Loggedin = ({ closeModal }) => {
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
       setData(
-        response.docs.map((data) => {
-          return { ...data.data(), id: data.id };
-        })
+        response.docs
+          .filter((val) => {
+            if (val.data().email == localStorage.getItem("email")) {
+              return val.data();
+            }
+          })
+          .map((data) => {
+            return { ...data.data(), id: data.id };
+          })
       );
     });
   };
@@ -37,37 +44,54 @@ const Loggedin = ({ closeModal }) => {
     });
     getData();
   }, [data]);
+  console.log(data);
   return (
-    <div className="w-full h-screen  absolute top-0 z-[10000]">
-      <div className="sm:w-[20%] w-[40%] sm:h-[40%] h-[20%] flex flex-col items-start p-10 justify-center relative sm:left-[78%] left-[55%] sm:top-[10%] top-[8%] bg-white border rounded-lg drop-shadow-lg">
+    <div className="">
+      <div className=" w-[250px]  h-[400px] flex flex-col items-center p-10 justify-center absolute sm:left-[80%] duration-700  left-[55%] sm:top-[10%] top-[8%] bg-white border rounded-lg drop-shadow-lg">
         <button
           onClick={() => closeModal(false)}
           className="absolute right-4 top-2"
         >
           X
         </button>
-
-        {localStorage.getItem("userName") == "" ? (
-          <div className="text-[30px] ">Loading...</div>
-        ) : (
-          <div className=" text-[10px] sm:text-[16px] ">
-            {localStorage.getItem("userName")}
-          </div>
-        )}
-
-        <div className="w-[100%] relative bottom-[-50%] flex items-center justify-center">
-          <button
-            className="sm:w-[130px] w-[50px] text-[10px] sm:text-[16px] border h-[25px] sm:h-[35px] rounded-xl text-white bg-gray-400 hover:bg-gray-500 transition-colors"
-            onClick={() => {
-              signOut(auth);
-              localStorage.removeItem("email");
-              localStorage.removeItem("password");
-              localStorage.removeItem("userName");
-              window.location.reload(true);
-            }}
-          >
-            Logout
-          </button>
+        <div className="w-[100%] h-[50px] border-b border-black flex items-center justify-center pb-10">
+          {data.map((val) => {
+            return (
+              <div className="text-black w-[100%] flex items-center justify-center flex-col">
+                <div className="">
+                  <p className="text-[20px] font-[700]">{val.userName}</p>
+                </div>
+                <div className="">
+                  <div className="">{val.sellerType}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="w-[100%] flex items-center justify-start gap-5 mt-10 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500">
+          <BiUserCircle className="text-[25px] text-gray-400" />
+          <div className="">My Profile</div>
+        </div>
+        <div className="w-[100%] flex items-center justify-start gap-5 mt-3 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500">
+          <BiEditAlt className="text-[25px] text-gray-400" />
+          <div className="">Edit Profile</div>
+        </div>
+        <div className="w-[100%] flex items-center justify-start gap-5 mt-3 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500">
+          <BiMailSend className="text-[25px] text-gray-400" />
+          <div className="">Inbox</div>
+        </div>
+        <div
+          className="w-[100%] flex items-center justify-start gap-5 mt-10 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500"
+          onClick={() => {
+            signOut(auth);
+            localStorage.removeItem("email");
+            localStorage.removeItem("password");
+            localStorage.removeItem("userName");
+            window.location.reload(true);
+          }}
+        >
+          <BiLogOut className="text-[25px] text-gray-400" />
+          <div className="">Logout</div>
         </div>
       </div>
     </div>
