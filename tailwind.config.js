@@ -13,7 +13,7 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        trans: 'rgba(0,0,0,0.1)',
+        trans: 'rgba(0,0,0,0.5)',
       },
       animation: {
         scrollX: 'scrollX 10s linear infinite',

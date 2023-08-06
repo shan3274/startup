@@ -1,34 +1,50 @@
 import Header from "@/src/components/Header";
-import React from "react";
+import React, { useEffect } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/src/firebase-config";
 import { getDownloadURL, ref, getStorage, uploadBytes } from "firebase/storage";
+import { HiOutlineInformationCircle } from "react-icons/hi";
 
 import { useState } from "react";
+import Tooltips from "@/src/components/Tooltips";
 const index = () => {
   const [type, setType] = useState("Spare parts");
   const [category, setCategory] = useState("");
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [typicalDescriotion, setTypicalDescription] = useState("");
   const [sellerName, setSellerName] = useState("");
   const [sellerEmail, setSellerEmail] = useState("");
-  const [sellerPhone, setSellerPhone] = useState("");
+  const [doc, setDoc] = useState();
   const [size, setSeize] = useState("");
   const [dateofManu, setDateofManu] = useState("");
   const [price, setPrice] = useState("");
   const [img, setImg] = useState([]);
   const [approve, setApprove] = useState("Not approve");
 
+  useEffect(() => {
+    setCategory(localStorage.getItem("sellerType"));
+    setSellerName(localStorage.getItem("userName"));
+    setSellerEmail(localStorage.getItem("email"));
+  }, []);
+
   let databaseRef;
-  let typepath;
+  let databaseRef1;
+
+  let typepath = `POSTS/GjZxh7T7CJsYv1lEEoyW/Machine/VHgC9rJmSFoK1CV1o922/${category}`;
   const downloadImageURLs = [];
-  if (type == "Machine") {
-    typepath = `POSTS/GjZxh7T7CJsYv1lEEoyW/Machine/VHgC9rJmSFoK1CV1o922/${category}`;
-  } else {
-    typepath = `POSTS/GjZxh7T7CJsYv1lEEoyW/Spareparts/jcJW7idJNETVspHqz7ir/${category}`;
-  }
+  let downloadDocumentURLs = "";
+  // if (type == "Machine") {
+  //   typepath = `POSTS/GjZxh7T7CJsYv1lEEoyW/Machine/VHgC9rJmSFoK1CV1o922/${category}`;
+  // } else {
+  //   typepath = `POSTS/GjZxh7T7CJsYv1lEEoyW/Spareparts/jcJW7idJNETVspHqz7ir/${category}`;
+  // }
   try {
     databaseRef = collection(db, typepath);
+    databaseRef1 = collection(
+      db,
+      `SellerProduct/hjSXho3U2Ictlf1XdAIu/${sellerEmail}`
+    );
   } catch (error) {
     console.log(error.message);
   }
@@ -37,6 +53,7 @@ const index = () => {
     try {
       const storageRef = getStorage();
       let imageURLs = "";
+      let documentURLs = "";
 
       let ins = 0;
       let ins1 = 0;
@@ -53,6 +70,17 @@ const index = () => {
           }
         );
       }
+      const documentRef = ref(
+        storageRef,
+        `Post/Document/'${Date.now()}-${doc.name}`
+      )
+      documentURLs = await uploadBytes(documentRef, doc);
+      await getDownloadURL(ref(storageRef, documentURLs.ref.fullPath)).then(
+        (response) => {
+          downloadDocumentURLs=response
+        }
+
+      )
 
       const dataShow = {
         productName: productName,
@@ -61,13 +89,16 @@ const index = () => {
         type: type,
         sellerName: sellerName,
         sellerEmail: sellerEmail,
-        sellerPhone: sellerPhone,
+        // sellerPhone: sellerPhone,
         size: size,
         dateofManu: dateofManu,
         price: price,
         imageUrls: downloadImageURLs,
+        documentUrl: documentURLs,
         firstapprove: approve,
+        typicalDescriotion: typicalDescriotion,
       };
+      await addDoc(databaseRef1, dataShow);
       await addDoc(databaseRef, dataShow).then(() => {
         alert("submitted");
         setProductName("");
@@ -76,22 +107,23 @@ const index = () => {
         setType("");
         setSellerName("");
         setSellerEmail("");
-        setSellerPhone("");
+        // setSellerPhone("");
         setSeize("");
         setDateofManu("");
         setPrice("");
+        setTypicalDescription("");
       });
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  console.log("path", typepath);
   return (
     <div className="">
-      <Header />
-
       <div className="w-full  flex flex-col items-center justify-start">
         {/* type */}
-        <div className="w-[15%] h-[5%] flex items-center justify-center border bg-white  mt-8 rounded-lg drop-shadow-md absolute">
+        {/* <div className="w-[15%] h-[5%] flex items-center justify-center border bg-white  mt-8 rounded-lg drop-shadow-md absolute">
           <select
             id="type"
             name="type"
@@ -101,16 +133,20 @@ const index = () => {
             <option value="Spare parts">Spare parts</option>
             <option value="Machine">Machine</option>
           </select>
-        </div>
+        </div> */}
         {/* form */}
 
-        <div className="w-full h-screen flex flex-col items-center justify-start  mt-[6rem]">
+        <div className="w-full  flex flex-col items-center justify-start  mt-[6rem]">
           {/* label */}
-          <label className="w-[15%] flex items-center justify-center h-[5%] mb-10 text-[30px] font-[600]">
-            {type}
+          <label className="w-[20%] h-[40px] flex items-center justify-center  mb-10 text-[30px] font-[600]">
+            ADD PRODUCT
+            <Tooltips size={150} text={"this is form"}>
+              <HiOutlineInformationCircle className="ml-5 text-[20px]" />
+            </Tooltips>
           </label>
+
           {/* image */}
-          <div className="w-[15%] h-[10%] flex items-center justify-center bg-yellow-300 rounded-lg drop-shadow-lg hover:scale-[1.03] transition-[1s] cursor-pointer">
+          <div className="w-[15%] h-[70px] flex items-center justify-center bg-yellow-300 rounded-lg drop-shadow-lg hover:scale-[1.03] transition-[1s] cursor-pointer">
             <label htmlFor="image">Image +</label>
             <input
               type="file"
@@ -120,15 +156,25 @@ const index = () => {
               multiple
             />
           </div>
+
+          <div className="w-[15%] h-[70px] flex items-center justify-center mt-5 bg-yellow-300 rounded-lg drop-shadow-lg hover:scale-[1.03] transition-[1s] cursor-pointer">
+            <label htmlFor="Doc">Document +</label>
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => setDoc(e.target.files)}
+              id="Doc"
+            />
+          </div>
           {/* fields */}
           <input
             type="text"
             placeholder="Product Name"
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
-            className="w-[25%] h-[5%] pl-5 mt-10 border border-gray-400 text-black rounded-md"
+            className="w-[25%] h-[40px] pl-5 mt-10 border border-gray-400 text-black rounded-md"
           />
-          <div className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md flex items-center ">
+          {/* <div className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md flex items-center ">
             <select
               id="type"
               name="type"
@@ -143,37 +189,44 @@ const index = () => {
               <option value="Category 5">Category 5</option>
               <option value="Category 6">Category 6</option>
             </select>
-          </div>
+          </div> */}
+          <input
+            placeholder="Typical Description"
+            value={typicalDescriotion}
+            onChange={(e) => setTypicalDescription(e.target.value)}
+            className="w-[25%] h-[40px] pl-5 mt-5 border border-gray-400 text-black rounded-md"
+          />
           <textarea
             placeholder="Product Description"
             value={productDescription}
             onChange={(e) => setProductDescription(e.target.value)}
-            className="w-[25%] h-[20%] pl-5 mt-5 border border-gray-400 text-black rounded-md resize-none"
+            className="w-[25%] h-[100px] pl-5 mt-5 border border-gray-400 text-black rounded-md resize-none"
           ></textarea>
-          <input
+
+          {/* <input
             type="text"
             placeholder="Seller Name"
             value={sellerName}
             onChange={(e) => setSellerName(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
-          />
-          <input
+          /> */}
+          {/* <input
             type="email"
             placeholder="Seller Email"
             value={sellerEmail}
             onChange={(e) => setSellerEmail(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
-          />
-          <input
+          /> */}
+          {/* <input
             type="text"
             placeholder="Seller Phone"
             value={sellerPhone}
             onChange={(e) => setSellerPhone(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
-          />
+          /> */}
         </div>
 
-        <div className="w-full h-screen flex flex-col items-center justify-start relative top-[-6rem]">
+        <div className="w-full h-screen flex flex-col items-center justify-start relative mt-5">
           {/* fields */}
           <input
             type="number"

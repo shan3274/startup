@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { db } from "../firebase-config";
+import { HiOutlineInformationCircle } from "react-icons/hi";
 
+// typeing style lib
+
+import Typewriter from "typewriter-effect";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -16,6 +20,7 @@ import Know from "./Know";
 import Link from "next/link";
 import Sidebar from "./Sidebar";
 import { collection, getDocs } from "firebase/firestore";
+import Tooltips from "./Tooltips";
 
 const Homepage = () => {
   const [ifuser, setIfUser] = useState(null);
@@ -23,26 +28,101 @@ const Homepage = () => {
   // modals
   const [know, setKnow] = useState(false);
 
+  const [data, setData] = useState([]);
+
+  // modals
+
+  let databaseRef;
+
+  try {
+    databaseRef = collection(db, `User`);
+  } catch (error) {
+    console.log(error.message);
+  }
+
+  const getData = async () => {
+    await getDocs(databaseRef).then((response) => {
+      setData(
+        response.docs
+          .filter((val) => {
+            if (val.data().email == localStorage.getItem("email")) {
+              return val.data();
+            }
+          })
+          .map((data) => {
+            return { ...data.data(), id: data.id };
+          })
+      );
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+  useEffect(() => {
+    data.map((item) => {
+      localStorage.setItem("companyAddress", item.companyAddress);
+      localStorage.setItem("companyName", item.companyName);
+      localStorage.setItem("email", item.email);
+      localStorage.setItem("gstin", item.gstin);
+      localStorage.setItem("natureOfBusiness", item.natureOfBusiness);
+      localStorage.setItem("sellerType", item.sellerType);
+      localStorage.setItem("userName", item.userName);
+    });
+  }, [data]);
+
+  console.log(data);
+
   useEffect(() => {
     setIfUser(localStorage.getItem("email"));
   }, []);
+  console.log("data", data);
 
   if (ifuser != null) {
     return (
-      <div className="w-full h-screen flex flex-col justify-start items-center ">
-        <div className="w-[30%] h-[20%] flex items-center justify-around">
-          <Link href="/sell" className="w-[40%] h-[40%]">
-            <div className="w-[100%] h-[100%] rounded-lg border bg-orange-400 drop-shadow-xl text-white text-[25px] flex items-center justify-center cursor-pointer hover:scale-[1.03] transition-[1s]">
-              SELL
+      <>
+        <div
+          className="w-full  flex flex-col justify-center items-center  absolute top-0 z-[-1]"
+          style={{
+            backgroundImage: `url("https://tecdn.b-cdn.net/img/new/slides/041.jpg")`,
+            height: "100vh",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
+        >
+          <div className="w-full h-screen flex flex-col justify-center items-center bg-trans ">
+            <div className="w-full flex flex-col items-center justify-center gap-4">
+              <p className="text-[70px] font-[500] text-white">
+                This is Heading Exmple{" "}
+              </p>
+              <p className="text-[20px] w-[40%] text-center text-teal-300">
+                <Typewriter
+                  options={{
+                    strings: [
+                      "this is text example and the actual text will be replace",
+                      "You can buy any thing here",
+                    ],
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              </p>
             </div>
-          </Link>
-          <Link href="/buy" className="w-[40%] h-[40%]">
-            <div className="w-[100%] h-[100%] rounded-lg border bg-orange-400 drop-shadow-xl text-white text-[25px] flex items-center justify-center cursor-pointer hover:scale-[1.03] transition-[1s]">
-              BUY
+            <div className="w-[30%] h-[20%]  flex items-center justify-around">
+              <Link href="/sell" className="w-[40%] h-[40%]">
+                <div className="relative overflow-hidden w-[100%] h-[100%] flex items-center justify-center px-[15px] py-0 text-center  text-[25px] mx-[20px] my-[10px] rounded-[25px]  border-[2px] bg-trans text-white cursor-pointer border-[#009688] duration-500 hover:bg-[#009688] ">
+                  SELL
+                </div>
+              </Link>
+              <Link href="/buy" className="w-[40%] h-[40%]">
+                <div className="relative overflow-hidden w-[100%] h-[100%] flex items-center justify-center px-[15px] py-0 text-center  text-[25px] mx-[20px] my-[10px] rounded-[25px]  border-[2px] bg-trans text-white cursor-pointer border-[#009688] duration-500 hover:bg-[#009688] ">
+                  BUY
+                </div>
+              </Link>
             </div>
-          </Link>
+          </div>
         </div>
-      </div>
+      </>
     );
   } else {
     return (
@@ -70,8 +150,8 @@ const Homepage = () => {
           <div className="flex w-[100%] overflow-hidden select-none">
             <div className="flex-shrink-0 flex items-center justify-around whitespace-nowrap w-[100%] animate-pulse">
               <div className="grid place-items-center w-[clamp(10rem, 1rem + 40vmin, 30rem)] p-[calc(clamp(10rem, 1rem + 30vmin, 30rem) / 10)]">
-                <p className="text-[20px] sm:text-[35px] font-[500] object-contain w-[100%] h-[100%] rounded-[.5rem] px-[5px] py-[20px] drop-shadow-md">
-                  Tag Line / Punch Line Scrolling
+                <p className="text-[25px] font-[700] text-orange-500 object-contain w-[100%] h-[100%] rounded-[.5rem] px-[5px] py-[20px] drop-shadow-md">
+                  ONE STOP SOLUTION FOR TECHNICAL PRODUCTS AND SERVICES
                 </p>
               </div>
             </div>
@@ -158,7 +238,6 @@ const Homepage = () => {
                 />
               </div>
             </SwiperSlide>
-            
           </Swiper>
         </div>
         {/* Services */}

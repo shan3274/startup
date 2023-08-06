@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 import { BiUserCircle, BiEditAlt, BiMailSend, BiLogOut } from "react-icons/bi";
+import Link from "next/link";
 
 const Loggedin = ({ closeModal }) => {
   const users = useSelector((state) => state.user.value);
@@ -68,14 +69,20 @@ const Loggedin = ({ closeModal }) => {
             );
           })}
         </div>
-        <div className="w-[100%] flex items-center justify-start gap-5 mt-10 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500">
+        <Link
+          href="/profile"
+          className="w-[100%] flex items-center justify-start gap-5 mt-10 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500"
+        >
           <BiUserCircle className="text-[25px] text-gray-400" />
           <div className="">My Profile</div>
-        </div>
-        <div className="w-[100%] flex items-center justify-start gap-5 mt-3 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500">
+        </Link>
+        <Link
+          href="/profile/Dashboard"
+          className="w-[100%] flex items-center justify-start gap-5  mt-3 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500"
+        >
           <BiEditAlt className="text-[25px] text-gray-400" />
-          <div className="">Edit Profile</div>
-        </div>
+          <div className="">Dashboard</div>
+        </Link>
         <div className="w-[100%] flex items-center justify-start gap-5 mt-3 cursor-pointer hover:text-gray-700 hover:scale-[1.05] duration-500">
           <BiMailSend className="text-[25px] text-gray-400" />
           <div className="">Inbox</div>
@@ -87,6 +94,12 @@ const Loggedin = ({ closeModal }) => {
             localStorage.removeItem("email");
             localStorage.removeItem("password");
             localStorage.removeItem("userName");
+            localStorage.removeItem("companyAddress");
+            localStorage.removeItem("companyName");
+            localStorage.removeItem("gstin");
+            localStorage.removeItem("natureOfBusiness");
+            localStorage.removeItem("sellerType");
+
             window.location.reload(true);
           }}
         >

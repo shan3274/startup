@@ -33,8 +33,8 @@ const Homepage = () => {
         <Link href="/admin/Accountreq" className="hover:text-blue-400">
           Account Request
         </Link>
-        <Link href="" className="hover:text-blue-400">
-          Link 1
+        <Link href="/admin/UserProfile" className="hover:text-blue-400">
+          User Profile
         </Link>
         <Link href="" className="hover:text-blue-400">
           Link 1

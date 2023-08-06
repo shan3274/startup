@@ -79,7 +79,7 @@ const Header = () => {
           {userEmail != null ? (
             <>
               <button onClick={() => setLoggedin(true)}>
-                <BiUserCircle className="sm:text-[42px] text-[30px]" />
+                <BiUserCircle className="sm:text-[42px] text-[30px] bg-white rounded-full" />
               </button>
             </>
           ) : (
