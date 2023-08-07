@@ -76,7 +76,7 @@ const Request = () => {
               onChange={(e) => setCategory(e.target.value)}
             >
               <option value="">Select Category</option>
-              <option value="Category 1">Category 1</option>
+              <option value="Mechanical">Mechanical</option>
               <option value="Category 2">Category 2</option>
               <option value="Category 3">Category 3</option>
               <option value="Category 4">Category 4</option>

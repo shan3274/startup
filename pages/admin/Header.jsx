@@ -11,7 +11,7 @@ const Homepage = () => {
     <div className="w-full  flex flex-col">
       <div className="w-full h-[5rem] bg-black text-white text-[30px] flex items-center justify-center">
         Admin <span className="text-red-500"> Home</span>
-        <div className="absolute right-0 w-[30%] h-[100%] flex items-center justify-center  gap-3 text-white text-[20px]">
+        <div className="absolute right-0 w-[30%]  flex items-center justify-center  gap-3 text-white text-[20px]">
           <div className="">
             <p>{admin}</p>
           </div>
@@ -36,8 +36,8 @@ const Homepage = () => {
         <Link href="/admin/UserProfile" className="hover:text-blue-400">
           User Profile
         </Link>
-        <Link href="" className="hover:text-blue-400">
-          Link 1
+        <Link href="/admin/UserInterface" className="hover:text-blue-400">
+          User Interface
         </Link>
         <Link href="" className="hover:text-blue-400">
           Link 1

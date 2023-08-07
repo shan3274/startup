@@ -19,7 +19,7 @@ import Image from "next/image";
 import Know from "./Know";
 import Link from "next/link";
 import Sidebar from "./Sidebar";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import Tooltips from "./Tooltips";
 
 const Homepage = () => {
@@ -29,18 +29,26 @@ const Homepage = () => {
   const [know, setKnow] = useState(false);
 
   const [data, setData] = useState([]);
+  const [tagLine, setTagLine] = useState("");
 
   // modals
 
   let databaseRef;
+  let path;
 
   try {
     databaseRef = collection(db, `User`);
+    path = "UserInterface/vFdgXW8SBEMdfNDycDZ6/HomePage";
   } catch (error) {
     console.log(error.message);
   }
 
   const getData = async () => {
+    try {
+      await getDoc(doc(db, path, "FF1HsofLHYGocihT2ruZ")).then((res) => {
+        setTagLine(res.data().tageLine);
+      });
+    } catch (error) {}
     await getDocs(databaseRef).then((response) => {
       setData(
         response.docs
@@ -151,7 +159,7 @@ const Homepage = () => {
             <div className="flex-shrink-0 flex items-center justify-around whitespace-nowrap w-[100%] animate-pulse">
               <div className="grid place-items-center w-[clamp(10rem, 1rem + 40vmin, 30rem)] p-[calc(clamp(10rem, 1rem + 30vmin, 30rem) / 10)]">
                 <p className="text-[25px] font-[700] text-orange-500 object-contain w-[100%] h-[100%] rounded-[.5rem] px-[5px] py-[20px] drop-shadow-md">
-                  ONE STOP SOLUTION FOR TECHNICAL PRODUCTS AND SERVICES
+                  {tagLine}
                 </p>
               </div>
             </div>

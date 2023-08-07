@@ -10,6 +10,8 @@ const Loggedin = ({ closeModal }) => {
   const users = useSelector((state) => state.user.value);
   const [email, setEmail] = useState(null);
   const [data, setData] = useState([]);
+  const [userName, setUserName] = useState("");
+  const [sellerType, setSllerType] = useState("");
 
   // modals
 
@@ -35,7 +37,10 @@ const Loggedin = ({ closeModal }) => {
       );
     });
   };
-
+  useEffect(() => {
+    setUserName(localStorage.getItem("userName"));
+    setSllerType(localStorage.getItem("sellerType"));
+  }, []);
   useEffect(() => {
     if (window === undefined) return;
 
@@ -56,18 +61,14 @@ const Loggedin = ({ closeModal }) => {
           X
         </button>
         <div className="w-[100%] h-[50px] border-b border-black flex items-center justify-center pb-10">
-          {data.map((val) => {
-            return (
-              <div className="text-black w-[100%] flex items-center justify-center flex-col">
-                <div className="">
-                  <p className="text-[20px] font-[700]">{val.userName}</p>
-                </div>
-                <div className="">
-                  <div className="">{val.sellerType}</div>
-                </div>
-              </div>
-            );
-          })}
+          <div className="text-black w-[100%] flex items-center justify-center flex-col">
+            <div className="">
+              <p className="text-[20px] font-[700]">{userName}</p>
+            </div>
+            <div className="">
+              <div className="">{sellerType}</div>
+            </div>
+          </div>
         </div>
         <Link
           href="/profile"
